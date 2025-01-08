@@ -17,4 +17,4 @@ With this app, users can add and delete tasks, assign due dates for each task, a
 
 This project is deployed on GitHub Pages:
 
-- [My Todo App Overview](https://github.com/samuller13/se_project_todo-app)
+- [My Todo App](https://samuller13.github.io/se_project_todo-app/)
