@@ -1,17 +1,20 @@
-# Simple Todo App
+# The Simple ToDo App
 
-Give a brief description of the project here. Feel free to give it a different name.
+This is my project for Sprint 7. It is a simple to-do application.
 
 ## Functionality
 
-Give a more detailed explanation of the project and its functionality.
+With this app, users can add and delete tasks, assign due dates for each task, and check a box once the task has been completed.
 
 ## Technology
 
-Give a description of the technologies and techniques used. Pictures, GIFs, or screenshots that detail the project features are recommended.
+- HTML
+- CSS
+- JavaScript
+- OOP
 
 ## Deployment
 
 This project is deployed on GitHub Pages:
 
-- ADD LINK HERE
+- [My Todo App Overview](https://github.com/samuller13/se_project_todo-app)
