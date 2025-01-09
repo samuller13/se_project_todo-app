@@ -44,7 +44,6 @@ addTodoForm.addEventListener("submit", (evt) => {
 
   const id = uuidv4();
   const values = { name, date, id };
-  const todo = generateTodo(values);
   renderTodo(values);
   closeModal(addTodoPopup);
 });
