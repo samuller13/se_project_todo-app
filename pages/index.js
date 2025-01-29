@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import { initialTodos, validationConfig } from "../utils/constants.js";
 import Todo from "../components/Todo.js";
 import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
@@ -26,6 +27,22 @@ const generateTodo = (data) => {
   return todoElement;
 };
 
+const section = new Section({
+  items: initialTodos,
+  renderer: (item) => {
+    const todo = generateTodo(item);
+    section.addItem(todo);
+  },
+  containerSelector: ".todos__list",
+});
+
+section.renderItems();
+
+function renderTodo(item) {
+  const todo = generateTodo(item);
+  section.addItem(todo);
+}
+
 addTodoButton.addEventListener("click", () => {
   openModal(addTodoPopup);
 });
@@ -46,15 +63,6 @@ addTodoForm.addEventListener("submit", (evt) => {
   const values = { name, date, id };
   renderTodo(values);
   closeModal(addTodoPopup);
-});
-
-const renderTodo = (item) => {
-  const todo = generateTodo(item);
-  todosList.append(todo);
-};
-
-initialTodos.forEach((item) => {
-  renderTodo(item);
 });
 
 function handleEscape(evt) {
