@@ -4,22 +4,30 @@ import { initialTodos, validationConfig } from "../utils/constants.js";
 import Todo from "../components/Todo.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
-const addTodoPopup = document.querySelector("#add-todo-popup");
+const addTodoPopupEl = document.querySelector("#add-todo-popup");
 const addTodoForm = document.forms["add-todo-form"];
-const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
+const addTodoCloseBtn = addTodoPopupEl.querySelector(".popup__close");
 const todosList = document.querySelector(".todos__list");
 
-const openModal = (modal) => {
-  modal.classList.add("popup_visible");
-  document.addEventListener("keydown", handleEscape);
-};
+const addTodoPopup = new PopupWithForm({
+  popupSelector: "#add-todo-popup",
+  handleFormSubmit: (inputValues) => {
+    const name = inputValues.name;
+    const dateInput = inputValues.date;
 
-const closeModal = (modal) => {
-  modal.classList.remove("popup_visible");
-  document.removeEventListener("keydown", handleEscape);
-};
+    const date = new Date(dateInput);
+    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+
+    const id = uuidv4();
+    const values = { name, date, id };
+    renderTodo(values);
+    addTodoPopup.close();
+  },
+});
+addTodoPopup.setEventListeners();
 
 const generateTodo = (data) => {
   const todo = new Todo(data, "#todo-template");
@@ -44,33 +52,8 @@ function renderTodo(item) {
 }
 
 addTodoButton.addEventListener("click", () => {
-  openModal(addTodoPopup);
+  addTodoPopup.open();
 });
-
-addTodoCloseBtn.addEventListener("click", () => {
-  closeModal(addTodoPopup);
-});
-
-addTodoForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const name = evt.target.name.value;
-  const dateInput = evt.target.date.value;
-
-  const date = new Date(dateInput);
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-
-  const id = uuidv4();
-  const values = { name, date, id };
-  renderTodo(values);
-  closeModal(addTodoPopup);
-});
-
-function handleEscape(evt) {
-  if (evt.key === "Escape") {
-    const modalOpened = document.querySelector(".popup_visible");
-    closeModal(modalOpened);
-  }
-}
 
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 newTodoValidator.enableValidation();
